@@ -142,13 +142,11 @@
     const timerInterval = setInterval(updateTimer, 1000);
     updateTimer();
 
-  // gsap code here!
 });
 
-function openGoogleMaps() {
-    window.open("https://www.google.com/maps/place/Devi+Murugan+A%2FC+Mahal/@11.9525746,79.2130693,17z/data=!3m1!4b1!4m6!3m5!1s0x3baca90839474d4d:0x114db62553dc4a53!8m2!3d11.9525746!4d79.2156442!16s%2Fg%2F11t8bzlhlv?entry=ttu", "_blank");
-}
-
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+document.getElementById('google-map-button').addEventListener('click', () => {
+    window.open(
+        'https://www.google.com/maps/place/Devi+Murugan+A%2FC+Mahal/@11.9525746,79.2130693,17z/data=!3m1!4b1!4m6!3m5!1s0x3baca90839474d4d:0x114db62553dc4a53!8m2!3d11.9525746!4d79.2156442!16s%2Fg%2F11t8bzlhlv?entry=ttu',
+        '_blank'
+    );
+});
