@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parallax + Timeline + Gallery</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      /* font-family: Arial, sans-serif; */
+      overflow-x: hidden;
+      background: #000;
+      font-family: "Great Vibes", cursive;
+      /* font-weight: 400; */
+      font-style: normal;
+    }
+
+    /* Parallax Section */
+    .parallax-container {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .parallax-container-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120%;
+      object-fit: cover;
+      z-index: 1;
+      will-change: transform;
+    }
+
+    .overlay-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+      text-align: center;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 2rem;
+      font-size: 2rem;
+    }
+    
+    .overlay-names-container {
+        position: relative;
+    }
+
+    .overlay-savethedate {
+      margin-top: 100px;
+      font-size: 2rem;
+    }
+
+    .countdown {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 30px 0;
+    }
+
+    .time-box {
+        text-align: center;
+        background-color: #f4f4f49f;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .time-box span {
+        font-size: 2.5rem;
+        color: #222;
+        display: block;
+    }
+
+    .time-box small {
+        font-size: 0.9rem;
+        color: #777;
+        text-transform: uppercase;
+        margin-top: 5px;
+        display: block;
+    }
+
+
+    .love {
+        position: absolute;
+        height: 800px;
+        width: 800px;
+        transform: translate(0px, -100px);
+    }
+
+    .extra-content-wrapper {
+      padding: 4rem;
+      background: #f5f5f5;
+      font-size: 2rem;
+      line-height: 1.6;
+      text-align: center;
+
+      & p {
+        font-size: 2.8rem;
+        margin: 0;
+      }
+    }
+
+    /* Timeline Section */
+    .timeline-parallax-container {
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 2rem;
+      color: white;
+    }
+
+    .timeline-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 150%;
+
+      object-fit: cover;
+      z-index: 1;
+      will-change: transform;
+    }
+
+    .timeline-overlay-dark {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+    }
+
+    .timeline-overlay {
+      position: relative;
+      z-index: 3;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline-overlay h2 {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 3rem;
+    }
+
+    .timeline {
+      position: relative;
+      margin-left: 30px;
+      border-left: 3px solid #ffffffaa;
+      font-size: 1.2rem;
+    }
+
+    .timeline-event {
+      position: relative;
+      padding: 1.5rem 1rem 1.5rem 2rem;
+    }
+
+    .timeline-event::before {
+      content: '';
+      position: absolute;
+      left: -11px;
+      top: 1.5rem;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      border: 3px solid #3498db;
+      box-shadow: 0 0 0 3px #ffffffaa;
+      z-index: 3;
+    }
+
+    .timeline-event h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .timeline-event p {
+      margin: 0;
+      color: #f0f0f0;
+    }
+
+    @media (max-width: 600px) {
+      .timeline-event h3 {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      width: 100%;
+      height: 100vh;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-section h2 {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 2.8rem;
+      z-index: 10;
+    }
+
+    .gallery-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .gallery-image-wrapper img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      will-change: transform;
+    }
+
+    .gallery-image-wrapper img.active {
+      opacity: 1;
+    }
+
+
+
+
+ /* Event Details Section */
+    .event-details-container {
+        background-color: #f9f4f0;
+    }
+
+    .event-details-container-wrapper {
+        position: relative;
+        padding: 30px 20px;
+        color: #333;
+        overflow: hidden;
+        min-height: 70vh;  /* Adjusted height */
+        /* font-family: 'Georgia', serif; */
+        font-size: 1.5rem;
+    }
+
+    .event-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 150%;
+        object-fit: cover;
+        z-index: 1;
+        will-change: transform;
+        opacity: 0.15;
+        filter: blur(2px);
+    }
+
+    .event-overlay-dark {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.6);
+        z-index: 2;
+    }
+
+    .event-overlay {
+        position: relative;
+        z-index: 3;
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .event-intro {
+        font-size: 1.3rem;
+        line-height: 2rem;
+        margin-bottom: 2.5rem;
+        color: #333;
+    }
+
+    .event-flower {
+        height: 150px;
+        margin: 1.5rem auto;
+        position: absolute;
+        transform: translate(-50%, 100%);
+    }
+
+    .event-time-grid {
+        display: flex;
+        justify-content: space-around;
+        /* margin: 2rem 0; */
+    }
+
+    .event-time-grid h3 {
+        font-size: 1.3rem;
+        color: #4b636e;
+        margin-bottom: 0.3rem;
+    }
+
+    .event-time-grid p {
+        font-size: 1.1rem;
+        color: #4b636e;
+    }
+
+    .event-location {
+        font-size: 1.1rem;
+        color: #444;
+        margin-top: 2rem;
+    }
+
+
+    /* Footer Section */
+    .footer-backtotop {
+        background-color: #111;
+        color: white;
+        padding: 1.5rem;
+        text-align: center;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-names {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+
+    .love-symbol {
+        color: #e25555;
+    }
+
+    .back-to-top {
+        text-decoration: none;
+        color: #3498db;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .back-to-top:hover {
+        color: #5dade2;
+    }
+
+
+    @media (max-width: 600px) {
+        .overlay-content {
+            font-size: 1.5rem;
+            padding: 1rem;
+        }
+
+        .love {
+            height: 400px;
+            width: 400px;
+            transform: translate(-200px, -150px);
+        }
+
+        .countdown {
+            gap: 10px;
+        }
+
+        .time-box {
+            padding: 10px 15px;
+        }
+
+        .extra-content-wrapper {
+            padding: 2rem 0;
+        }
+        .extra-content {
+            font-size: 1rem;
+        }
+
+        .timeline {
+            margin-left: 15px;
+            border-left: 2px solid #ffffffaa;
+        }
+
+        .timeline-event {
+            padding: 1rem 0.5rem 1rem 1rem;
+        }
+
+        .gallery-section h2 {
+            font-size: 2rem;
+        }
+
+        .event-details-container-wrapper {
+            padding: 20px 10px;
+            font-size: 1.2rem;
+        }
+
+        .footer-names {
+            font-size: 1rem;
+        }
+
+        .back-to-top {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .overlay-content {
+            font-size: 1.2rem;
+            padding: 0.5rem;
+        }
+
+        .love {
+            height: 300px;
+            width: 300px;
+            transform: translate(-150px, -100px);
+        }
+
+        .countdown {
+            gap: 5px;
+        }
+
+        .time-box {
+            padding: 8px 10px;
+        }
+
+        .extra-content-wrapper {
+            padding: 2rem 0;
+        }
+
+        .extra-content {
+            font-size: 0px;
+        }
+
+        .timeline {
+            margin-left: 10px;
+            border-left: 1px solid #ffffffaa;
+        }
+
+        .timeline-event {
+            padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+        }
+
+        .gallery-section h2 {
+            font-size: 1.5rem;
+        }
+
+        .event-details-container-wrapper {
+            padding: 15px 5px;
+            font-size: 1rem;
+        }
+
+        .event-flower {
+            transform: translate(-50%, 130%);
+        }
+
+        .footer-names {
+            font-size: 0.8rem;
+        }
+
+        .back-to-top {
+            font-size: 0.8rem;
+        }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Parallax Section -->
+  <div class="parallax-container">
+    <img src="/assets/couple3.jpg" alt="Background" class="background-image">
+    <div class="parallax-container-overlay"></div>
+    <div class="overlay-content">
+        <div class="overlay-names-container">
+            <img src="/assets/22389121_6586086-removebg-preview.png" alt="Background" class="love">
+            <div class="overlay-names">
+                <h1>Amirtha Varshini</h1>
+                <h1>Manoji</h1>
+                <p>We're getting married!</p>
+            </div>
+        </div>  
+        <div class="overlay-savethedate">
+            <p>Save the date: June 5, 2025</p>
+            
+            <div class="countdown">
+                <div class="time-box"><span id="days">00</span><small>Days</small></div>
+                <div class="time-box"><span id="hours">00</span><small>Hours</small></div>
+                <div class="time-box"><span id="minutes">00</span><small>Minutes</small></div>
+                <div class="time-box"><span id="seconds">00</span><small>Seconds</small></div>
+            </div>
+              
+        </div>
+    </div>
+  </div>
+
+  <!-- Extra Content -->
+   <div class="extra-content-wrapper">
+    <div class="extra-content">
+        <p>We can't wait to be</p></br>
+        <p>surrounded by</p></br>
+        <p>our favorite people!</p></br>
+      </div>
+   </div>
+  
+
+  <!-- Timeline Section -->
+  <section class="timeline-parallax-container">
+    <img src="/assets/flowers.jpg" class="timeline-background" alt="Timeline Background">
+    <div class="timeline-overlay-dark"></div>
+    <div class="timeline-overlay">
+      <h2>Timeline</h2>
+      <div class="timeline">
+        <div class="timeline-event">
+          <h3>Feb 12 2025 - First Meet</h3>
+          <p>Embarked on a new career path with enthusiasm and determination.</p>
+        </div>
+        <div class="timeline-event">
+          <h3>March 10 2025 - Second Meet</h3>
+          <p>Completed key projects and gained significant industry experience.</p>
+        </div>
+        <div class="timeline-event">
+          <h3>March 16 2025 - First Date</h3>
+          <p>Promoted to a leadership position and mentored new team members.</p>
+        </div>
+        <div class="timeline-event">
+          <h3>Jun 4 2025 - Reception</h3>
+          <p>Expanded into new domains and took on broader responsibilities.</p>
+        </div>
+        <div class="timeline-event">
+            <h3>Jun 5 2025 - Marriage Ceremony</h3>
+            <p>Expanded into new domains and took on broader responsibilities.</p>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section" id="gallerySection">
+    <h2>Gallery</h2>
+    <div class="gallery-image-wrapper" id="galleryWrapper">
+      <img src="/assets/couple.jpg" alt="Gallery 1" />
+      <img src="/assets/couple2.jpg" alt="Gallery 2" />
+      <img src="/assets/couple3.jpg" alt="Gallery 3" />
+      <img src="/assets/couple4.jpg" alt="Gallery 4" />
+      <img src="/assets/couple.jpg" alt="Gallery 5" />
+    </div>
+  </section>
+  
+
+  <!-- Event Details Section -->
+    <section class="event-details-container">
+        <div class="event-details-container-wrapper">
+        <img src="https://images.unsplash.com/photo-1530023367847-a683933f417f" class="event-background" alt="Event Background">
+        <div class="event-overlay-dark"></div>
+        <div class="event-overlay">
+            <img src="/assets/rose.png" class="event-flower" alt="Flower">
+            <div>
+                <h1>Wedding Celebration</h1>
+                <p class="event-intro">
+                    We are delighted to invite you to our wedding celebration. It will be intimate, cozy and full of love. Get ready for a day of joy and fun.
+                </p>
+            
+            
+                <div class="event-time-grid">
+                    <div>
+                    <h3>Reception</h3>
+                    <p>JUN 4th 2025</p>
+                    <p>at 6 p.m.</p>
+                    </div>
+                    <div>
+                    <h3>Ceremony</h3>
+                    <p>JUN 5th 2025</p>
+                    <p>at 4:30 a.m.</p>
+                    </div>
+                </div>
+            
+                <p class="event-location">
+                    Our Home, Terry Francine Street,<br>
+                    San Francisco
+                </p>
+                <div class="event-map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.5684400192413!2d79.2156442!3d11.9525746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baca90839474d4d%3A0x114db62553dc4a53!2sDevi%20Murugan%20A%2FC%20Mahal!5e0!3m2!1sen!2sin!4v1688459821419!5m2!1sen!2sin"
+                        width="100%"
+                        height="300"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    </section>
+  
+    <!-- Footer Section -->
+    <footer class="footer-backtotop">
+        <div class="footer-content">
+            <span class="footer-names">A <span class="love-symbol">❤️</span> M</span>
+            <a href="#" class="back-to-top" onclick="scrollToTop()">↑ Back to Top</a>
+        </div>
+    </footer>
+  
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(".overlay-names", {
+        opacity: 0,
+        y: "0%",
+    }, {
+        opacity: 1,
+        y: "-20%",
+        duration: 3
+    })
+
+    gsap.fromTo(".love", {
+        opacity: 0,
+        y: "0%",
+    }, {
+        opacity: 1,
+        y: "-5%",
+        duration: 3,
+        delay: 0.5
+    })
+
+    gsap.fromTo(".overlay-savethedate", {
+        opacity: 0,
+        y: "0%",
+    }, {
+        opacity: 1,
+        y: "-20%",
+        duration: 1,
+        delay: 1
+    })
+
+    gsap.fromTo(".extra-content", {
+        opacity: 0,
+    }, {
+        opacity: 1,
+        scrollTrigger: {
+            trigger: ".extra-content",
+            start: "top 80%",
+            end: "bottom 50%",
+            scrub: true
+        }
+    })
+
+    gsap.fromTo(".timeline-overlay", {
+        opacity: 0,
+    }, {
+        opacity: 1,
+        scrollTrigger: {
+            trigger: ".timeline-parallax-container",
+            start: "top 80%",
+            end: "bottom 50%",
+            scrub: true
+        }
+    })
+
+    gsap.fromTo(".event-details-container-wrapper", {
+        opacity: 0,
+    }, {
+        opacity: 1,
+        duration: 1,
+        scrollTrigger: {
+            trigger: ".event-details-container-wrapper",
+            start: "top 80%",
+            end: "bottom 50%",
+            scrub: true
+        }
+    })
+
+    // Parallax effect for first section
+    gsap.to(".background-image", {
+      y: "-20%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".parallax-container",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Parallax effect for timeline
+    gsap.to(".timeline-background", {
+      y: "-20%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".timeline-parallax-container",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Gallery Slide Show with fade effect
+    const images = document.querySelectorAll('#galleryWrapper img');
+    let current = 0;
+
+    images[current].classList.add('active');
+
+    function showNextImage() {
+      const prev = current;
+      current = (current + 1) % images.length;
+
+      gsap.to(images[prev], { opacity: 0, duration: 1 });
+      gsap.to(images[current], { opacity: 1, duration: 1 });
+    }
+
+    setInterval(showNextImage, 3000);
+
+    // Parallax for gallery images (vertical scroll motion)
+    images.forEach(img => {
+      gsap.to(img, {
+        y: "-10%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#gallerySection",
+          start: "top bottom",
+          end: "bottom top",
+        //   scrub: true
+        }
+      });
+    });
+
+        // Parallax for event details
+    gsap.to(".event-background", {
+    y: "-20%",
+    ease: "none",
+    scrollTrigger: {
+        trigger: ".event-details-container",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+    }
+    });
+
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const weddingDate = new Date("June 5, 2025 00:00:00").getTime();
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const timeLeft = weddingDate - now;
+
+        if (timeLeft <= 0) {
+            document.getElementById("countdown-timer").innerHTML = "The big day is here!";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        document.getElementById("days").textContent = String(days).padStart(2, '0');
+        document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+        document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+        document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+
+
+  </script>
+</body>
+</html>
