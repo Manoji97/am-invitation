@@ -2,7 +2,7 @@
  document.addEventListener("DOMContentLoaded", (event) => {
   gsap.registerPlugin(ScrollTrigger)
 
-    ScrollTrigger.normalizeScroll(true); // enable
+    // ScrollTrigger.normalizeScroll(true); // enable
     ScrollTrigger.config({ ignoreMobileResize: true })
     ScrollTrigger.defaults({
         markers: false,  // Remove in production
@@ -40,7 +40,7 @@
     })
 
     gsap.fromTo(".extra-content", {
-        opacity: 0,
+        opacity: 0.5,
     }, {
         opacity: 1,
         scrollTrigger: {
@@ -51,32 +51,32 @@
         }
     })
 
-    gsap.fromTo(".timeline-overlay", {
-        opacity: 0,
-    }, {
-        opacity: 1,
-        scrollTrigger: {
-            trigger: ".timeline-parallax-container",
-            start: "top 80%",
-            end: "bottom 50%",
-            scrub: true
-        }
-    })
+    // gsap.fromTo(".timeline-overlay", {
+    //     opacity: 0,
+    // }, {
+    //     opacity: 1,
+    //     scrollTrigger: {
+    //         trigger: ".timeline-parallax-container",
+    //         start: "top 80%",
+    //         end: "bottom 50%",
+    //         scrub: true
+    //     }
+    // })
 
-    gsap.fromTo(".event-details-container-wrapper", {
-        opacity: 0,
-    }, {
-        opacity: 1,
-        duration: 1,
-        scrollTrigger: {
-            trigger: ".event-details-container-wrapper",
-            start: "top 80%",
-            end: "bottom 50%",
-            scrub: true
-        }
-    })
+    // gsap.fromTo(".event-details-container-wrapper", {
+    //     opacity: 0,
+    // }, {
+    //     opacity: 1,
+    //     duration: 1,
+    //     scrollTrigger: {
+    //         trigger: ".event-details-container-wrapper",
+    //         start: "top 80%",
+    //         end: "bottom 50%",
+    //         scrub: true
+    //     }
+    // })
 
-    // Parallax effect for first section
+    // // Parallax effect for first section
     gsap.to(".background-image", {
     y: "-20%",
     ease: "none",
@@ -107,40 +107,14 @@
     images[current].classList.add('active');
 
     function showNextImage() {
-    const prev = current;
-    current = (current + 1) % images.length;
+        const prev = current;
+        current = (current + 1) % images.length;
 
-    gsap.to(images[prev], { opacity: 0, duration: 1 });
-    gsap.to(images[current], { opacity: 1, duration: 1 });
+        gsap.to(images[prev], { opacity: 0, duration: 1 });
+        gsap.to(images[current], { opacity: 1, duration: 1 });
     }
 
     setInterval(showNextImage, 3000);
-
-    // Parallax for gallery images (vertical scroll motion)
-    images.forEach(img => {
-    gsap.to(img, {
-        y: "-10%",
-        ease: "none",
-        scrollTrigger: {
-        trigger: "#gallerySection",
-        start: "top bottom",
-        end: "bottom top",
-        //   scrub: true
-        }
-    });
-    });
-
-        // Parallax for event details
-    gsap.to(".event-background", {
-    y: "-20%",
-    ease: "none",
-    scrollTrigger: {
-        trigger: ".event-details-container",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
-    }
-    });
 
 
     function scrollToTop() {
