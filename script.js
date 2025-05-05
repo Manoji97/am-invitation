@@ -2,9 +2,12 @@
  document.addEventListener("DOMContentLoaded", (event) => {
   gsap.registerPlugin(ScrollTrigger)
 
+    ScrollTrigger.normalizeScroll(true); // enable
+    ScrollTrigger.config({ ignoreMobileResize: true })
     ScrollTrigger.defaults({
         markers: false,  // Remove in production
-        scrub: false
+        scrub: false,
+        anticipatePin: 1,
     });
 
     gsap.fromTo(".overlay-names", {
