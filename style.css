@@ -64,7 +64,7 @@ body {
 
 .overlay-names-container {
     position: relative;
-    margin-top: 200px;
+    margin-top: 150px;
 
     & h1 {
         margin: 0;
@@ -153,8 +153,13 @@ body {
   text-align: center;
 
   & p {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
     margin: 0;
+  }
+
+  & span {
+    font-size: 1.8rem;
+    margin: 10px 10px;
   }
 }
 
@@ -243,7 +248,7 @@ body {
 /* Gallery Section */
 .gallery-section {
   width: 100%;
-  height: 100vh;
+  height: 60vh;
   color: #fff;
   display: flex;
   justify-content: center;

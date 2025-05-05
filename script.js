@@ -21,10 +21,10 @@
 
     gsap.fromTo(".love", {
         opacity: 0,
-        y: "0%",
+        y: "-10%",
     }, {
         opacity: 1,
-        y: "-5%",
+        y: "-40%",
         duration: 3,
         delay: 0.5
     })
