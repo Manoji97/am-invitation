@@ -39,17 +39,17 @@
         delay: 1
     })
 
-    gsap.fromTo(".extra-content", {
-        opacity: 0.5,
-    }, {
-        opacity: 1,
-        scrollTrigger: {
-            trigger: ".extra-content",
-            start: "top 80%",
-            end: "bottom 50%",
-            scrub: true
-        }
-    })
+    // gsap.fromTo(".extra-content", {
+    //     opacity: 0.5,
+    // }, {
+    //     opacity: 1,
+    //     scrollTrigger: {
+    //         trigger: ".extra-content",
+    //         start: "top 80%",
+    //         end: "bottom 50%",
+    //         scrub: true
+    //     }
+    // })
 
     // gsap.fromTo(".timeline-overlay", {
     //     opacity: 0,
@@ -116,11 +116,6 @@
 
     setInterval(showNextImage, 3000);
 
-
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     const weddingDate = new Date("June 5, 2025 00:00:00").getTime();
 
     function updateTimer() {
@@ -149,3 +144,11 @@
 
   // gsap code here!
 });
+
+function openGoogleMaps() {
+    window.open("https://www.google.com/maps/place/Devi+Murugan+A%2FC+Mahal/@11.9525746,79.2130693,17z/data=!3m1!4b1!4m6!3m5!1s0x3baca90839474d4d:0x114db62553dc4a53!8m2!3d11.9525746!4d79.2156442!16s%2Fg%2F11t8bzlhlv?entry=ttu", "_blank");
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}

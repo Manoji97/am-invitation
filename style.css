@@ -54,10 +54,21 @@ body {
   transform: translateY(-50%);
   padding: 2rem;
   font-size: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
 }
 
 .overlay-names-container {
     position: relative;
+    margin-top: 200px;
+
+    & h1 {
+        margin: 0;
+    }
 }
 
 .overlay-savethedate {
@@ -101,6 +112,37 @@ body {
     height: 800px;
     width: 800px;
     transform: translate(0px, -100px);
+}
+
+.location-section {
+    text-align: center;
+    /* padding: 40px 20px; */
+    max-width: 600px;
+}
+
+.location-section h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.location-section p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.open-maps {
+    background-color: transparent;
+    color: white;
+    padding: 12px 20px;
+    border: 2px solid white;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.open-maps:hover {
+    background-color: #0056b3;
 }
 
 .extra-content-wrapper {
