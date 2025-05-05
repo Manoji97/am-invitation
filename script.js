@@ -2,7 +2,10 @@
  document.addEventListener("DOMContentLoaded", (event) => {
   gsap.registerPlugin(ScrollTrigger)
 
-    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.defaults({
+        markers: false,  // Remove in production
+        scrub: false
+    });
 
     gsap.fromTo(".overlay-names", {
         opacity: 0,

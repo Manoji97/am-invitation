@@ -11,6 +11,15 @@ html, body {
   font-style: normal;
 }
 
+html {
+    height: -webkit-fill-available;
+}
+
+body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+}
+
 /* Parallax Section */
 .parallax-container {
   position: relative;
